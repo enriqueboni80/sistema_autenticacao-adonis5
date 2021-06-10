@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+  db-mysql:
+    image: mysql
+    container_name: db-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    # It is best to bind sockets on Windows.
+    # command: --innodb_use_native_aio=0 --socket=/tmp/mysql.sock --bind_address=0.0.0.0
+    restart: always
+    environment:
+      MYSQL_USER: 'sistema'
+      MYSQL_PASSWORD: 'abc123.'
+      MYSQL_DATABASE: 'sistema'
+      MYSQL_ROOT_PASSWORD: 'abc123.'
+    ports:
+      - 3306:3306
+    expose:
+      - '3306'
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+networks:
+  sistema-network:
+    driver: bridge
+
+  # application:
+  #   build: front/.
+  #   ports:
+  #     - '80:80'
+  #   depends_on:
+  #     - api
+  #   volumes:
+  #     - ./:/usr/src
