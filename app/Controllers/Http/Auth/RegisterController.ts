@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import User from 'App/Models/User'
 
 export default class RegisterController {
   public async index({}: HttpContextContract) {}
@@ -7,7 +8,11 @@ export default class RegisterController {
     return view.render('auth/register')
   }
 
-  public async store({}: HttpContextContract) {}
+  public async store({ request }: HttpContextContract) {
+    const data = request.only(['email', 'password'])
+    const user = await User.create(data)
+    return user
+  }
 
   public async show({}: HttpContextContract) {}
 
