@@ -1,5 +1,4 @@
 import Event from '@ioc:Adonis/Core/Event'
-
 import Mail from '@ioc:Adonis/Addons/Mail'
 
 Event.on('new:user', (user) => {
