@@ -1,8 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import Util from 'App/Helpers/Util'
-
-import Mail from '@ioc:Adonis/Addons/Mail'
+import Event from '@ioc:Adonis/Core/Event'
 
 export default class RegisterController {
   public async index({}: HttpContextContract) {}
@@ -15,18 +14,7 @@ export default class RegisterController {
     const data = request.only(['email', 'password', 'activationToken'])
     data.activationToken = Util.createActivationToken()
     const user = await User.create(data)
-
-    await Mail.send((message) => {
-      message
-        .from('info@example.com')
-        .to('virk@adonisjs.com')
-        .subject('Welcome Onboard!')
-        .htmlView('emails/welcome', {
-          user: { fullName: 'Some Name' },
-          url: `http://localhost:3333/register/validate/${user.activationToken}`,
-        })
-    })
-
+    Event.emit('new:user', user)
     return user
   }
 
