@@ -1,11 +1,11 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class LoginController {
-  public async index({}: HttpContextContract) {}
-
-  public async create({ view }: HttpContextContract) {
+  public async index({ view }: HttpContextContract) {
     return view.render('auth/login')
   }
+
+  public async create({}: HttpContextContract) {}
 
   public async store({}: HttpContextContract) {}
 
