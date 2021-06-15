@@ -1,5 +1,6 @@
 import Event from '@ioc:Adonis/Core/Event'
 import Mail from '@ioc:Adonis/Addons/Mail'
+import Env from '@ioc:Adonis/Core/Env'
 
 Event.on('new:user', (user) => {
   Mail.send((message) => {
@@ -9,7 +10,9 @@ Event.on('new:user', (user) => {
       .subject('Welcome Onboard!')
       .htmlView('emails/welcome', {
         user: { fullName: 'Some Name' },
-        url: `http://localhost:3333/register/validate/${user.activationToken}`,
+        url: `http://${Env.get('HOST')}:${Env.get('PORT')}/register/validate/${
+          user.activationToken
+        }`,
       })
   })
 })
