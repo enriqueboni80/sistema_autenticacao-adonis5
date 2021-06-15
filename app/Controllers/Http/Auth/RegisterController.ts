@@ -18,6 +18,17 @@ export default class RegisterController {
     return user
   }
 
+  public async validate({ request }: HttpContextContract) {
+    const activationToken = request.param('activation-token')
+    try {
+      const user = await User.findByOrFail('activationToken', activationToken)
+      await user.merge({ validated: true, activationToken: '' }).save()
+      return 'usuario validado com sucesso'
+    } catch (error) {
+      return 'esse token não existe ou já foi validado'
+    }
+  }
+
   public async show({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}

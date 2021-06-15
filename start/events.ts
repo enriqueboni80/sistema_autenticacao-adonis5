@@ -5,11 +5,11 @@ import Env from '@ioc:Adonis/Core/Env'
 Event.on('new:user', (user) => {
   Mail.send((message) => {
     message
-      .from('info@example.com')
-      .to('virk@adonisjs.com')
-      .subject('Welcome Onboard!')
+      .from('enricao@bengala.com')
+      .to(user.email)
+      .subject('Email de validacao de cadastro')
       .htmlView('emails/welcome', {
-        user: { fullName: 'Some Name' },
+        user: { email: user.email },
         url: `http://${Env.get('HOST')}:${Env.get('PORT')}/register/validate/${
           user.activationToken
         }`,
