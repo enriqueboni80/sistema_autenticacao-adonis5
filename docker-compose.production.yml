@@ -26,6 +26,17 @@ services:
     networks:
       - sistema-network
 
+  application:
+    build:
+      context: ./
+      dockerfile: Dockerfile.production
+    ports:
+      - 3333:3333
+    expose:
+      - '3333'
+    networks:
+      - sistema-network
+
 networks:
   sistema-network:
     driver: bridge

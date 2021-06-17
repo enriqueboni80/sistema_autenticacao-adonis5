@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node ace build --production",
-    "start": "node server.js",
+    "build": "node ace build --production && cp .env* build/",
+    "start": "env-cmd -f .env.production node build/server.js",
     "dev": "node ace serve --watch",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write ."
@@ -31,10 +31,13 @@
     "@adonisjs/session": "^6.0.5",
     "@adonisjs/shield": "^7.0.3",
     "@adonisjs/view": "^6.0.3",
+    "cross-env": "^7.0.3",
+    "env-cmd": "^10.1.0",
     "luxon": "^1.27.0",
     "mysql": "^2.18.1",
     "pg": "^8.6.0",
     "phc-argon2": "^1.1.1",
+    "pino-pretty": "^5.0.2",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.19"
