@@ -11,7 +11,7 @@ export default class RegisterController {
   }
 
   public async store({ request }: HttpContextContract) {
-    const data = request.only(['email', 'password', 'activationToken'])
+    const data = request.except(['_csrf'])
     data.activationToken = Util.createActivationToken()
     const user = await User.create(data)
     Event.emit('new:user', user)
