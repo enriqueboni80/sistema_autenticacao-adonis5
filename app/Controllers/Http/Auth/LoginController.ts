@@ -8,7 +8,7 @@ export default class LoginController {
     return view.render('auth/login')
   }
 
-  public async auth({ auth, request, response }: HttpContextContract) {
+  public async auth({ auth, request, view }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
 
@@ -19,7 +19,8 @@ export default class LoginController {
     }
 
     await auth.use('web').login(user)
-    response.redirect('posts')
+    // response.redirect('posts')
+    return view.render('home')
   }
 
   public async create({}: HttpContextContract) {}
