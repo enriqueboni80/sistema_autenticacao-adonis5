@@ -8,4 +8,7 @@ Route.get('/register/validate/:activation-token', 'Auth/RegisterController.valid
 Route.get('/forgot-password', 'Auth/ForgotPasswordController.create')
 // Route.post('/', ForgotPasswordController.sendResetLinkEmail)
 // Route.post('/reset/', ForgotPasswordController.resetPassword)
-// Route.post('/', LoginController.autenticar)
+
+Route.group(() => {
+  Route.get('/logout', 'Auth/LogoutController.index')
+}).middleware('auth')
