@@ -1,6 +1,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/login', 'Auth/LoginController.index')
+Route.post('/login', 'Auth/LoginController.auth')
 Route.get('/register', 'Auth/RegisterController.create')
 Route.post('/register', 'Auth/RegisterController.store')
 Route.get('/register/validate/:activation-token', 'Auth/RegisterController.validate')
