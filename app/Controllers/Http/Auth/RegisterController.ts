@@ -15,7 +15,8 @@ export default class RegisterController {
     data.activationToken = Util.createActivationToken()
     const user = await User.create(data)
     Event.emit('new:user', user)
-    return user
+    return 'Ative o usuário via email'
+    // return user
   }
 
   public async validate({ request }: HttpContextContract) {
