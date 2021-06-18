@@ -5,5 +5,6 @@ Route.get('/', async ({ response }) => {
 })
 
 Route.group(() => {
+  Route.get('/dashboard', 'DashboardController.index')
   Route.resource('/posts', 'PostsController')
 }).middleware('auth')
