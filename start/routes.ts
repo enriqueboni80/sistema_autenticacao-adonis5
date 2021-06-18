@@ -4,4 +4,6 @@ Route.get('/', async ({ response }) => {
   response.redirect().toRoute('Auth/LoginController.index')
 })
 
-Route.resource('/posts', 'PostsController')
+Route.group(() => {
+  Route.resource('/posts', 'PostsController')
+}).middleware('auth')

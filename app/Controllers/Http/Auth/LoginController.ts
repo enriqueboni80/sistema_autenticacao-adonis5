@@ -1,12 +1,14 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import Hash from '@ioc:Adonis/Core/Hash'
+// import Route from '@ioc:Adonis/Core/Route'
+
 export default class LoginController {
   public async index({ view }: HttpContextContract) {
     return view.render('auth/login')
   }
 
-  public async auth({ request }: HttpContextContract) {
+  public async auth({ auth, request, response }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
 
@@ -16,7 +18,8 @@ export default class LoginController {
       return 'A Senha esta errada'
     }
 
-    return 'logado com sucesso'
+    await auth.use('web').login(user)
+    response.redirect('posts')
   }
 
   public async create({}: HttpContextContract) {}
