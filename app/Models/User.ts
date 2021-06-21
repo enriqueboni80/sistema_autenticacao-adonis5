@@ -13,7 +13,7 @@ export default class User extends BaseModel {
   public lastName: string
 
   @column()
-  public email: string
+  public email: string | null
 
   @column({ serializeAs: null })
   public password: string

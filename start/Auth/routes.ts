@@ -12,3 +12,9 @@ Route.get('/forgot-password', 'Auth/ForgotPasswordController.create')
 Route.group(() => {
   Route.get('/logout', 'Auth/LogoutController.index')
 }).middleware('auth')
+
+Route.get('/google/redirect', async ({ ally }) => {
+  return ally.use('google').redirect()
+})
+
+Route.get('/google/callback', 'Auth/LoginController.google')

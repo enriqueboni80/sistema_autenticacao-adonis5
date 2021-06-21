@@ -22,6 +22,56 @@ export default class LoginController {
     response.redirect('dashboard')
   }
 
+  public async google({ ally, auth, response }: HttpContextContract) {
+    const google = ally.use('google')
+
+    /**
+     * User has explicitly denied the login request
+     */
+    if (google.accessDenied()) {
+      return 'Access was denied'
+    }
+
+    /**
+     * Unable to verify the CSRF state
+     */
+    if (google.stateMisMatch()) {
+      return 'Request expired. Retry again'
+    }
+
+    /**
+     * There was an unknown error during the redirect
+     */
+    if (google.hasError()) {
+      return google.getError()
+    }
+
+    const googleUser = await google.user()
+
+    /**
+     * Find the user by email or create
+     * a new one
+     */
+    const user = await User.firstOrCreate(
+      {
+        email: googleUser.email,
+      },
+      {
+        firstName: googleUser.original.given_name,
+        lastName: googleUser.original.family_name,
+        email: googleUser.original.email,
+        validated: true,
+        password: 'abc123.',
+      }
+    )
+
+    /**
+     * Login user using the web guard
+     */
+    await auth.use('web').login(user)
+    response.redirect('/dashboard')
+  }
+
   public async create({}: HttpContextContract) {}
 
   public async store({}: HttpContextContract) {}
